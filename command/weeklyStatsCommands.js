@@ -2,17 +2,30 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 const Discord = require("discord.js");
 const config = require("../config/config.json");
+
+/**
+ * Importing models.
+ */
 const Members = require("../model/Members");
 const Member = require("../model/Member");
 const ClanQuestMember = require("../model/ClanQuestMember");
 const ClanQuestMembers = require("../model/ClanQuestMembers");
 
+/**
+ * Importing helper functions.
+ */
 const flatten = require("../helper/flatten");
 const getFrequentHits = require("../helper/getFrequentHits");
 const getHighestConsecutiveHits = require("../helper/getHighestConsecutiveHits");
 
+/**
+ * Global variables.
+ */
 const baseGoogleSpreadsheetUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
+/**
+ * Creates a new <Members> from the google spreadsheet.
+ */
 function getMembersInfo() {
 	const minRow = 4;
 	const maxRow = 53;
@@ -23,6 +36,7 @@ function getMembersInfo() {
 		const newMembers = new Members();
 		const membersInfo = data.values;
 		membersInfo.map((memberInfo) => {
+			// Checking if the name field is non-empty.
 			if (memberInfo[1]) {
 				let member = getMemberInfo(memberInfo);
 				member.total = parseInt(member.total);
@@ -41,10 +55,19 @@ function getMembersInfo() {
 	});
 }
 
+/**
+ * Creates a <Member> from an array containing member information.
+ *
+ * @param {Array} memberData - An array containing information about a member.
+ * @return {Member} - A <Member> with all of the information.
+ */
 function getMemberInfo(memberData) {
 	return new Member(...memberData);
 }
 
+/**
+ * Creates a new <ClanQuestMembers> from the google spreadsheet.
+ */
 function getClanQuestMembersInfo() {
 	const minRow = 4;
 	const maxRow = 38;
@@ -66,6 +89,12 @@ function getClanQuestMembersInfo() {
 	});
 }
 
+/**
+ * Creates a <ClanQuestMember> from an array containing member information.
+ *
+ * @param {Array} memberData - An array containing information about a clan quest member.
+ * @return {ClanQuestMember} - A <ClanQuestMember> with all of the information.
+ */
 function getClanQuestMemberInfo(memberData) {
 	// Convert consecutive hits into an array.
 	let hits = memberData.slice(1,29).map((hit) => {
@@ -87,12 +116,16 @@ function getClanQuestMemberInfo(memberData) {
 		highestConsecutiveHits=getHighestConsecutiveHits(hits),
 		frequentHits=getFrequentHits(hits),
 		mostDamageOnOneTitan=Math.max(...hits)
-	)
-
+	);
 	return member;
 }
 
-function weeklyStatsCommand(message) {
+/**
+ * Sends weekly stats to the given discord channel.
+ *
+ * @param {Channel} channel - The discord channel to send message to
+ */
+function getWeeklyStatsCommand(channel) {
 	Promise.all([getMembersInfo(), getClanQuestMembersInfo()])
 	.then((data) => {
 		const dateRange = getWeekRangeForSunday();
@@ -118,14 +151,20 @@ function weeklyStatsCommand(message) {
 				`**Thug** - ${thug.stat.toLocaleString()} damage done to one Titanlord.\n` +
 				`${thug.names.join(", ")}\n`
 			)
-			.attachFile('./report.png')
+			.attachFile('./assets/report.png')
 			.setTimestamp();
 
-		message.channel.send({embed});
+		channel.send({embed});
 	})
 	.catch((error) => {throw error});
 }
 
+/**
+ * Calculates the current week range from sunday to sunday.
+ * For example, 1/14/2018 to 1/21/2018.
+ *
+ * @return {String} - a string containing the weekrange.
+ */
 function getWeekRangeForSunday() {
 	let startDate = new Date();
 	let endDate = new Date();
@@ -142,4 +181,6 @@ function getWeekRangeForSunday() {
 	return `${startDate.getMonth()+1}/${startDate.getDate()}/${startDate.getFullYear()} - ${endDate.getMonth()+1}/${endDate.getDate()}/${endDate.getFullYear()}`;
 }
 
-module.exports = weeklyStatsCommand;
+module.exports = {
+	getWeeklyStatsCommand: getWeeklyStatsCommand
+}

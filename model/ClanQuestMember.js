@@ -1,3 +1,6 @@
+/**
+ * A class that contains a member's clan quest information.
+ */
 class ClanQuestMember {
 	constructor(name, hits, totalDamage, averageDamage, maxStage, joinedDiscord, lastWeekAverage, lastWeekMS, highestConsecutiveHits, frequentHits, mostDamageOnOneTitan) {
 		this.name = name;

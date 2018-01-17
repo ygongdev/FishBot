@@ -1,9 +1,16 @@
-const firebase = require("../config/firebaseConfig");
-const database = firebase.database;
-const tournamentRef = database.ref("tournament");
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
 
+/**
+ * Importing Firebase.
+ */
+const firebase = require("../config/firebaseConfig");
+const database = firebase.database;
+const tournamentRef = database.ref("tournament");
+
+/**
+ * List of tournament types.
+ */
 const types = [
 	"There is no bonus during this tournament.",
 	"All heroes do 5x damage.",
@@ -17,23 +24,31 @@ const types = [
 	"Your critical hit chance will increase 40%.",
 ];
 
+/**
+ * List of tournament rewards.
+ */
 const rewards = [
 	"Shards + Pets",
 	"Weapon Upgrades + Fortune",
 	"Skill Points + Perks"
 ]
 
+// 0 for Sunday, 3 for Wednesday
 const tournamentUTCDays = [0, 3];
-const tournamentUTCHour = 0;
 
-function getCurrentTournament(message) {
+/**
+ * Sends current tournament information to the given discord channel.
+ *
+ * @param {Channel} channel - The discord channel to send message to.
+ */
+function getCurrentTournament(channel) {
 	tournamentRef.once('value')
 	.then((snapshot) => {
 		if (isTournamentOn()) {
 			const data = snapshot.val();
 			const rewardCounter = data["rewardCounter"];
 			const typeCounter = data["typeCounter"]
-			const timeRemaining = getTimeLeft();
+			const timeRemaining = getCurrentTournamentTimeLeft();
 			const embed = new Discord.RichEmbed()
 			.setTitle(`**There is a tournament currently going on. Go go go!**\n`)
 			.setDescription(
@@ -41,27 +56,33 @@ function getCurrentTournament(message) {
 				`**Reward**: ${rewards[rewardCounter]}\n` +
 				`**Time Remaining to join**: ${timeRemaining.days} Days ${timeRemaining.hours} Hours ${timeRemaining.minutes} Minutes ${timeRemaining.seconds} Seconds\n`
 			);
-			message.channel.send({embed});
+			channel.send({embed});
 		} else {
 			const embed = new Discord.RichEmbed()
 			.setTitle(`No tournament is currently going on.\n`)
 			.setDescription(
 				`Use **!next_tour** to ask about the next tournament.\n`
 			);
-			message.channel.send({embed});
+			channel.send({embed});
 		}
 	})
 }
 
-function getNextTournament(message) {
+/**
+ * Sends next tournament information to the given discord channel.
+ *
+ * @param {Channel} channel - The discord channel to send message to.
+ */
+function getNextTournament(channel) {
 	tournamentRef.once('value')
 	.then((snapshot) => {
 		const currentDate = new Date();
 		let nextDate = new Date();
-		// Next tournament has to be sunday
+		// Next tournament has to be sunday.
 		if (currentDate.getUTCDay() >= 3) {
 			nextDate.setUTCDate(currentDate.getUTCDate() + (7 - currentDate.getUTCDay()));
 		} else {
+			// Next tournament has to be wednesday.
 			nextDate.setUTCDate(currentDate.getUTCDate() + (3 - currentDate.getUTCDay()));
 		}
 		nextDate.setUTCHours(0);
@@ -80,16 +101,22 @@ function getNextTournament(message) {
 			`**Reward**: ${rewards[rewardCounter]}\n` +
 			`**Time Remaining until you can join**: ${timeRemaining.days} Days ${timeRemaining.hours} Hours ${timeRemaining.minutes} Minutes ${timeRemaining.seconds} Seconds\n`
 		);
-		message.channel.send({embed});
+		channel.send({embed});
 	});
 }
 
+/**
+ * Returns whether or not there is currently a tournament going on.
+ */
 function isTournamentOn() {
 	const currentDate = new Date();
 	return tournamentUTCDays.indexOf(currentDate.getUTCDay()) > -1;
 }
 
-function getTimeLeft() {
+/**
+ * Returns the time left for the current tournament.
+ */
+function getCurrentTournamentTimeLeft() {
 	const currentDate = new Date();
 	const endDate = new Date();
 	endDate.setUTCDate(currentDate.getUTCDate() + 1);
@@ -100,7 +127,15 @@ function getTimeLeft() {
 	return getTimeDifference(endDate, currentDate);
 }
 
-
+/**
+ * Gets the days, hours, minutes, and seconds representation of the time difference.
+ * Stackoverflow Reference: https://stackoverflow.com/questions/13903897/javascript-return-number-of-days-hours-minutes-seconds-between-two-dates.
+ *
+ * @param {Date} date1 - first date.
+ * @param {Date} date2 - second date.
+ *
+ * @return {Object} - an object containing the days, hours, minutes, and seconds.
+ */
 function getTimeDifference(date1, date2) {
 	// get total seconds between the times
 	let delta = Math.abs(date1 - date2) / 1000;
@@ -129,7 +164,14 @@ function getTimeDifference(date1, date2) {
 }
 
 /**
- * 12 AM Wednesday and Sunday UTC is 6 PM Tuesday, Saturday my time.
+ * Cron job that updates the counters in firebase.
+ *
+ * IMPORTANT NOTE:
+ * Tournament occurs every Wednesday and Sunday at 12:00 AM UTC.
+ * However, Cronjob uses system time, so for me, the equivalent of
+ * 12 AM Wednesday and Sunday UTC is Tuesday and Saturday 6 PM.
+ *
+ * Please convert to your own system time, so it updates correctly.
  */
 const counterUpdate = schedule.scheduleJob('0 18 * * 2,6', function(){
 	tournamentRef.once('value')

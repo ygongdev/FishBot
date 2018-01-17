@@ -1,6 +1,10 @@
 const getMaxAttr = require("../helper/getMaxAttr");
 const getStatResult = require("../helper/getStatResult");
 
+/**
+ * A class that contains an array of <ClanQuestMember> and functions
+ * to calculate weekly stats information.
+ */
 class ClanQuestMembers {
 	constructor() {
 		this.members = [];

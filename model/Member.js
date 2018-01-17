@@ -1,3 +1,6 @@
+/**
+ * A class that contains a member's information.
+ */
 class Member {
 	constructor(rank, name, total, averageDamage, lastWeekAverage, averageMargin, MS, MSLastWeek, increase, joinedDiscord) {
 		this.rank = rank;
