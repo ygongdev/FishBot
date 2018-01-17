@@ -14,7 +14,7 @@ const tournamentCommands = require("./command/tournamentCommands");
 
 const timestampFromSnowflake = (id) => {
 	return (id / 4194304) + 1420070400000;
-};
+}; // Pointless text
 
 client.on("ready", () => {
 	console.log("I am ready!");
