@@ -137,7 +137,7 @@ function getWeeklyStatsCommand(channel) {
 
 		const embed = new Discord.RichEmbed()
 			.setTitle("**༺Mistborn Accolades༻**")
-			.setAuthor(`Weekly Statistics Report (${dateRange})`, `attachment://report.png`)
+			.setAuthor(`:barchart: Weekly Statistics Report (${dateRange})`)
 			.setColor(0x00AE86)
 			.setDescription(
 				`**Inspired** - ${inspired.stat.toLocaleString()}% average damage increase from last week.\n` +
