@@ -1,14 +1,21 @@
 # FishBot #
 A Discord Bot made for Tap Titans 2. Automatically parses google spreadsheet for statistics and has tournament timer.
 
-# Set Up #
+# Table of Contents
+1. [Set Up](#setUp)
+2. [Node.js and Npm](#npm)
+3. [Configuration](#config)
+4. [Firebase](#firebase)
+5. [Commands](#commands)
+
+# Set Up <a name="setUp"></a> #
 To get set up, you need to install the dependeicies in `package.json` and create some configuration files for your tokens, api key, and spreadsheet id.
 
-## Node.js and Npm ##
+## Node.js and Npm <a name="npm"></a> ##
 1. If you don't have `node.js` nor `npm`, you need to install them first. `npm` is the package manager for node.js.
 2. Now that you have `npm`. Do `npm install` to install all the needed dependecies. Most importantly, this should install `firebase` and `discord.js` for you.
 
-## Configuration
+## Configuration <a name="config"></a> ##
 1. Create a `config` folder and the following files inside: `config.json` and `firebaseConfig.js`. 
 2. `googleSpreadsheetApiKey` is obtained via Google's spreadsheet API. You have to have a google account to set up the credentials.
 3. `spreadSheetId` is the id of your google spreadsheet.
@@ -47,7 +54,7 @@ module.exports = {
 }
 ```
 
-## Firebase ##
+## Firebase <a name="firebase"></a> ##
 1. I use firebase database to keep track of the tourament rotations, so the bot knows the rewards and the type of the tournament requested.
 2. There is a cron job set up in `command/tournamentCommand.js`. Since cron job doesn't take UTC time, you might have to modify it to your local time equivalent of `12:00 AM UTC Wednesday and Sunday`
 
@@ -61,9 +68,11 @@ module.exports = {
 }
 ```
 
-# Commands
-`!weekly_stats` - displays a weekly statistics from a google spreadsheet
-
-`!curr_tour` - displays information (type, rewards, time remaining) about the current tournament if there is one.
-
+# Commands <a name="commands"></a> #
+`!weekly_stats` - displays a weekly statistics from a google spreadsheet<br>
+`!curr_tour` - displays information (type, rewards, time remaining) about the current tournament if there is one.<br>
 `!next_tour` - displays information (type, rewards, time remaining) about the upcoming tournament.
+
+![!weekly_stats](assets/fishbot_weekly_stats.png "!weekly_stats")<br>
+![!curr_tour](assets/fishbot_curr_tour.png "!curr_tour")<br>
+![!next_tour](assets/fishbot_next_tour.png "!next_tour")
