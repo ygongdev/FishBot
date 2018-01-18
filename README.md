@@ -6,7 +6,8 @@ A Discord Bot made for Tap Titans 2. Automatically parses google spreadsheet for
 2. [Node.js and Npm](#npm)
 3. [Configuration](#config)
 4. [Firebase](#firebase)
-5. [Commands](#commands)
+5. [Usage](#usage)
+6. [Commands](#commands)
 
 # Set Up <a name="setUp"></a> #
 To get set up, you need to install the dependeicies in `package.json` and create some configuration files for your tokens, api key, and spreadsheet id.
@@ -67,6 +68,8 @@ module.exports = {
   }
 }
 ```
+# Usage <a name="usage"></a> #
+Simple one liner: `node bot.js`
 
 # Commands <a name="commands"></a> #
 `!weekly_stats` - displays a weekly statistics from a google spreadsheet<br>
