@@ -15,6 +15,7 @@ const ClanQuestMembers = require("./model/ClanQuestMembers");
 /**
  * Importing commands.
  */
+const helpCommands = require("./command/helpCommands");
 const weeklyStatsCommand = require("./command/weeklyStatsCommands");
 const tournamentCommands = require("./command/tournamentCommands");
 // Fun commands.
@@ -40,6 +41,8 @@ client.on("message", message => {
 			tournamentCommands.getNextTournament(message.channel);
 		} else if (message.content === `${config.prefix}justdoit`) {
 			miscCommands.getJustDoItGif(message.channel);
+		} else if (message.content === `${config.prefix}help`) {
+			helpCommands.getHelp(message.channel, config.prefix);
 		}
 	} catch (error) {
 		message.channel.send('Sorry! An error occurred!');
