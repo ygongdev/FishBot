@@ -137,7 +137,7 @@ function getWeeklyStatsCommand(channel) {
 
 		const embed = new Discord.RichEmbed()
 			.setTitle("**༺Mistborn Accolades༻**")
-			.setAuthor(`:barchart: Weekly Statistics Report (${dateRange})`)
+			.setAuthor(`📊 Weekly Statistics Report (${dateRange})`)
 			.setColor(0x00AE86)
 			.setDescription(
 				`**Inspired** - ${inspired.stat.toLocaleString()}% average damage increase from last week.\n` +
@@ -151,7 +151,6 @@ function getWeeklyStatsCommand(channel) {
 				`**Thug** - ${thug.stat.toLocaleString()} damage done to one Titanlord.\n` +
 				`${thug.names.join(", ")}\n`
 			)
-			.attachFile('./assets/report.png')
 			.setTimestamp();
 
 		channel.send({embed});
