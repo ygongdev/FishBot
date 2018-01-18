@@ -1,13 +1,14 @@
 {
-  "name": "tt2discord",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "FishBot",
+  "version": "1.0.1",
+  "description": "A Discord Bot made for Tap Titans 2. Automatically parses google spreadsheet for statistics and has tournament timer.",
+  "main": "bot.js",
   "scripts": {
+    "start": "node bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yicheng Gong",
+  "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.3.0",
@@ -21,5 +22,8 @@
     "phantom": "^4.0.12",
     "request": "^2.83.0",
     "whatwg-fetch": "^2.0.3"
+  },
+  "engines": {
+    "node": "8.3.0"
   }
 }
