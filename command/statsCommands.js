@@ -1,5 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+const numeral = require('numeral');
 const Discord = require("discord.js");
 const config = require("../config/config.json");
 
@@ -125,11 +126,33 @@ function getClanQuestMemberInfo(memberData) {
 }
 
 /**
+ * Calculates the current week range from sunday to sunday.
+ * For example, 1/14/2018 to 1/21/2018.
+ *
+ * @return {String} - a string containing the weekrange.
+ */
+function getWeekRangeForSunday() {
+	let startDate = new Date();
+	let endDate = new Date();
+	let currentDate = new Date();
+
+	 if (currentDate.getDay() === 0) {
+		startDate.setDate(currentDate.getDate() - 7);
+		endDate = currentDate;
+	 } else {
+		startDate.setDate(currentDate.getDate() - currentDate.getDay());
+		endDate.setDate(startDate.getDate() + 7);
+	}
+
+	return `${startDate.getMonth()+1}/${startDate.getDate()}/${startDate.getFullYear()} - ${endDate.getMonth()+1}/${endDate.getDate()}/${endDate.getFullYear()}`;
+}
+
+/**
  * Sends weekly stats to the given discord channel.
  *
  * @param {Channel} channel - The discord channel to send message to
  */
-function getWeeklyStatsCommand(channel) {
+function getWeeklyStats(channel) {
 	Promise.all([getMembersInfo(), getClanQuestMembersInfo()])
 	.then((data) => {
 		const dateRange = getWeekRangeForSunday();
@@ -162,28 +185,34 @@ function getWeeklyStatsCommand(channel) {
 	.catch((error) => {throw error});
 }
 
+
 /**
- * Calculates the current week range from sunday to sunday.
- * For example, 1/14/2018 to 1/21/2018.
+ * Sends top ten total damage dealer to the given discord channel.
  *
- * @return {String} - a string containing the weekrange.
+ * @param {Channel} channel - The discord channel to send message to
  */
-function getWeekRangeForSunday() {
-	let startDate = new Date();
-	let endDate = new Date();
-	let currentDate = new Date();
+function getTopTenTotalDamage(channel) {
+	Promise.all([getMembersInfo(), getClanQuestMembersInfo()])
+	.then((data) => {
+		var memberName;
+		var memberTotal;
+		var newNumeral;
 
-	 if (currentDate.getDay() === 0) {
-		startDate.setDate(currentDate.getDate() - 7);
-		endDate = currentDate;
-	 } else {
-		startDate.setDate(currentDate.getDate() - currentDate.getDay());
-		endDate.setDate(startDate.getDate() + 7);
-	}
+		const embed = new Discord.RichEmbed()
+		.setAuthor("Top 10 members - Total Damage")
+		.setColor(0x00AE86);
+		for (let i = 0; i < 10; i++) {
+			memberName = data[0].members[i].name;
+			memberTotal = numeral(data[0].members[i].total).format('0,0');
+			embed.addField(`${i + 1}. ${memberName}`, `\t${memberTotal}`)
+		}
 
-	return `${startDate.getMonth()+1}/${startDate.getDate()}/${startDate.getFullYear()} - ${endDate.getMonth()+1}/${endDate.getDate()}/${endDate.getFullYear()}`;
+		channel.send({embed});
+	})
+	.catch((error) => {throw error});
 }
 
 module.exports = {
-	getWeeklyStatsCommand: getWeeklyStatsCommand
+	getWeeklyStats: getWeeklyStats,
+	getTopTenTotalDamage: getTopTenTotalDamage
 }
