@@ -5,6 +5,11 @@ const client = new Discord.Client();
 const config = require("./config/config.json");
 
 /**
+ * Importing Helpers.
+ */
+
+const splitString = require("./helper/splitString")
+/**
  * Importing models.
  */
 const Members = require("./model/Members");
@@ -31,12 +36,12 @@ client.on("ready", () => {
 // Create an event listener for messages
 client.on("message", message => {
 	try {
-		var splitContent = splitString(message.content, ' ');
+		let splitContent = splitString(message.content, ' ');
 		if (!message.content.startsWith(config.prefix) || message.author.bot) {
 			return;
 		} else if (message.content === `${config.prefix}weekly_stats`) {
 			statsCommand.getWeeklyStats(message.channel);
-		} else if (splitContent[0] === `${config.prefix}top`) {
+		} else if (splitContent[0] === `${config.prefix}top_damage`) {
 			statsCommand.getTopDamage(message.channel, splitContent[1]);
 		}else if (message.content === `${config.prefix}curr_tour`) {
 			tournamentCommands.getCurrentTournament(message.channel);
@@ -52,6 +57,8 @@ client.on("message", message => {
   			.then(member => {
     			statsCommand.getMyStats(message.channel, member.displayName);
   			});
+		} else if (message.content.startsWith(config.prefix)) {
+			message.channel.send(`Sorry I don't recognize that command. Type **${config.prefix}help** for the list of available commands.`)
 		}
 	} catch (error) {
 		message.channel.send('Sorry! An error occurred!');
@@ -60,13 +67,3 @@ client.on("message", message => {
 
 client.login(config.token);
 
-/**
- * Splits strings by a given character
- *
- * @param {string} content - the string to be split
- * @param {char} separator - the character we want to separate the string by
- */
-function splitString(content, separator) {
-	var strArray = content.split(separator);
-	return strArray;
-}

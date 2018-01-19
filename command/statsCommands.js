@@ -227,8 +227,8 @@ function getTopDamage(channel, number) {
 function getMyStats(channel, nickname) {
 	Promise.all([getMembersInfo(), getClanQuestMembersInfo()])
 	.then((data) => {
-		if(data[0].findByName(nickname) == -1) {
-			channel.send("Not a clan member");
+		if(!data[0].findByName(nickname)) {
+			channel.send("Sorry, not a clan member");
 		}
 		else {
 			const embed = new Discord.RichEmbed()

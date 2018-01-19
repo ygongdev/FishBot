@@ -27,7 +27,7 @@ class Members {
 			if (this.members[i].name === nickname)
 				return this.members[i];
 		}
-		return -1;
+		return null;
 	}
 }
 
