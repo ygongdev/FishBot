@@ -35,7 +35,9 @@ client.on("message", message => {
 			return;
 		} else if (message.content === `${config.prefix}weekly_stats`) {
 			weeklyStatsCommand.getWeeklyStatsCommand(message.channel);
-		} else if (message.content === `${config.prefix}curr_tour`) {
+		} else if (message.content === `${config.prefix}topTen`) {
+			weeklyStatsCommand.getTopTen(message.channel);
+		}else if (message.content === `${config.prefix}curr_tour`) {
 			tournamentCommands.getCurrentTournament(message.channel);
 		} else if (message.content === `${config.prefix}next_tour`) {
 			tournamentCommands.getNextTournament(message.channel);

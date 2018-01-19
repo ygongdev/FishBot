@@ -1,5 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+const numeral = require('numeral');
 const Discord = require("discord.js");
 const config = require("../config/config.json");
 
@@ -184,6 +185,28 @@ function getWeekRangeForSunday() {
 	return `${startDate.getMonth()+1}/${startDate.getDate()}/${startDate.getFullYear()} - ${endDate.getMonth()+1}/${endDate.getDate()}/${endDate.getFullYear()}`;
 }
 
+function getTopTen(channel) {
+	Promise.all([getMembersInfo(), getClanQuestMembersInfo()])
+	.then((data) => {
+		var memberName;
+		var memberTotal;
+		var newNumeral;
+
+		const embed = new Discord.RichEmbed()
+		.setAuthor("Top 10 members - Total Damage")
+		.setColor(0x00AE86);
+		for (let i = 0; i < 10; i++) {
+			memberName = data[0].members[i].name;
+			memberTotal = numeral(data[0].members[i].total).format('0,0');
+			embed.addField(`${i + 1}. ${memberName}`, `\t${memberTotal}`)
+		}	
+
+		channel.send({embed});
+	})
+	.catch((error) => {throw error});
+}
+
 module.exports = {
-	getWeeklyStatsCommand: getWeeklyStatsCommand
+	getWeeklyStatsCommand: getWeeklyStatsCommand,
+	getTopTen: getTopTen
 }
