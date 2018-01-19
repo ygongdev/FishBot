@@ -31,12 +31,13 @@ client.on("ready", () => {
 // Create an event listener for messages
 client.on("message", message => {
 	try {
+		var splitContent = splitString(message.content, ' ');
 		if (!message.content.startsWith(config.prefix) || message.author.bot) {
 			return;
 		} else if (message.content === `${config.prefix}weekly_stats`) {
 			statsCommand.getWeeklyStats(message.channel);
-		} else if (message.content === `${config.prefix}top_ten_damage`) {
-			statsCommand.getTopTenTotalDamage(message.channel);
+		} else if (splitContent[0] === `${config.prefix}top`) {
+			statsCommand.getTopDamage(message.channel, splitContent[1]);
 		}else if (message.content === `${config.prefix}curr_tour`) {
 			tournamentCommands.getCurrentTournament(message.channel);
 		} else if (message.content === `${config.prefix}next_tour`) {
@@ -45,6 +46,12 @@ client.on("message", message => {
 			miscCommands.getJustDoItGif(message.channel);
 		} else if (message.content === `${config.prefix}help`) {
 			helpCommands.getHelp(message.channel, config.prefix);
+		} else if (message.content === `${config.prefix}my_stats`) {
+			// first get the GuildMember who typed the message
+			message.guild.fetchMember(message.author)
+  			.then(member => {
+    			statsCommand.getMyStats(message.channel, member.displayName);
+  			});
 		}
 	} catch (error) {
 		message.channel.send('Sorry! An error occurred!');
@@ -52,3 +59,14 @@ client.on("message", message => {
 });
 
 client.login(config.token);
+
+/**
+ * Splits strings by a given character
+ *
+ * @param {string} content - the string to be split
+ * @param {char} separator - the character we want to separate the string by
+ */
+function splitString(content, separator) {
+	var strArray = content.split(separator);
+	return strArray;
+}

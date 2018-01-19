@@ -21,6 +21,14 @@ class Members {
 	getCoinShot() {
 		return getStatResult(this.members, 'increase');
 	}
+
+	findByName(nickname) {
+		for (let i = 0; i < this.members.length; i++) {
+			if (this.members[i].name === nickname)
+				return this.members[i];
+		}
+		return -1;
+	}
 }
 
 module.exports = Members;
