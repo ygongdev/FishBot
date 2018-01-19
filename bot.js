@@ -15,7 +15,7 @@ const ClanQuestMembers = require("./model/ClanQuestMembers");
 /**
  * Importing commands.
  */
-const weeklyStatsCommand = require("./command/weeklyStatsCommands");
+const statsCommand = require("./command/statsCommands");
 const tournamentCommands = require("./command/tournamentCommands");
 // Fun commands.
 const miscCommands = require("./command/miscCommands");
@@ -33,7 +33,7 @@ client.on("message", message => {
 		if (!message.content.startsWith(config.prefix) || message.author.bot) {
 			return;
 		} else if (message.content === `${config.prefix}weekly_stats`) {
-			weeklyStatsCommand.getWeeklyStatsCommand(message.channel);
+			statsCommand.getWeeklyStatsCommand(message.channel);
 		} else if (message.content === `${config.prefix}curr_tour`) {
 			tournamentCommands.getCurrentTournament(message.channel);
 		} else if (message.content === `${config.prefix}next_tour`) {
