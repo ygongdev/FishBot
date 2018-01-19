@@ -9,7 +9,7 @@ function getHelp(channel) {
 	.addField("my_stats", "\tDisplays your clan stats.")
 	.addField("curr_tour", "\tDisplays current tournament that is going on.")
 	.addField("next_tour", "\tDisplays when and what the next tournament is.")
-	.addField("top [number]", "\tDisplays the top total damage dealers.")
+	.addField("top_damage [number]", "\tDisplays the top total damage dealers.")
 	.addField("just_do_it", "\tDisplays the just do it gif.")
 	.setColor(0x00AE86)
 	.setFooter("FishBot | Help");
