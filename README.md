@@ -72,10 +72,14 @@ module.exports = {
 Simple one liner: `node bot.js`
 
 # Commands <a name="commands"></a> #
-`!weekly_stats` - displays a weekly statistics from a google spreadsheet<br>
-`!curr_tour` - displays information (type, rewards, time remaining) about the current tournament if there is one.<br>
-`!next_tour` - displays information (type, rewards, time remaining) about the upcoming tournament.
+`{prefix}weekly_stats` - displays a weekly statistics from a google spreadsheet<br>
+`{prefix}curr_tour` - displays information (type, rewards, time remaining) about the current tournament if there is one.<br>
+`{prefix}next_tour` - displays information (type, rewards, time remaining) about the upcoming tournament.
+`{prefix}my_stats` - displays your stats.
+`{prefix}top_damage [number]` - displays the top `number` damage dealers in clan quests.
 
-![!weekly_stats](assets/fishbot_weekly_stats.png "!weekly_stats")<br>
-![!curr_tour](assets/fishbot_curr_tour.png "!curr_tour")<br>
-![!next_tour](assets/fishbot_next_tour.png "!next_tour")
+![weekly_stats](assets/fishbot_weekly_stats.png "weekly_stats")<br>
+![curr_tour](assets/fishbot_curr_tour.png "curr_tour")<br>
+![next_tour](assets/fishbot_next_tour.png "next_tour")<br>
+![my_stats](assets/fishbot_my_stats.png "my_stats")<br>
+![top_damage 10](assets/fishbot_top_damage_ten.png "top damage 10")
