@@ -81,5 +81,5 @@ Simple one liner: `node bot.js`
 ![weekly_stats](assets/fishbot_weekly_stats.png "weekly_stats")<br>
 ![curr_tour](assets/fishbot_curr_tour.png "curr_tour")<br>
 ![next_tour](assets/fishbot_next_tour.png "next_tour")<br>
-![my_stats](assets/fishbot_my_stats.png "my_stats")<br>
+![my_stats](assets/fishbot_my_stats.PNG "my_stats")<br>
 ![top_damage 10](assets/fishbot_top_damage_ten.png "top damage 10")
