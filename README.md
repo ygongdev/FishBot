@@ -74,8 +74,8 @@ Simple one liner: `node bot.js`
 # Commands <a name="commands"></a> #
 `{prefix}weekly_stats` - displays a weekly statistics from a google spreadsheet<br>
 `{prefix}curr_tour` - displays information (type, rewards, time remaining) about the current tournament if there is one.<br>
-`{prefix}next_tour` - displays information (type, rewards, time remaining) about the upcoming tournament.
-`{prefix}my_stats` - displays your stats.
+`{prefix}next_tour` - displays information (type, rewards, time remaining) about the upcoming tournament.<br>
+`{prefix}my_stats` - displays your stats.<br>
 `{prefix}top_damage [number]` - displays the top `number` damage dealers in clan quests.
 
 ![weekly_stats](assets/fishbot_weekly_stats.png "weekly_stats")<br>
