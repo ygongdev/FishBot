@@ -1,13 +1,23 @@
 # FishBot #
-A Discord Bot made for Tap Titans 2. Automatically parses google spreadsheet for statistics and has tournament timer.
+A Discord Bot made for Tap Titans 2. Automatically parses google spreadsheet for statistics and has tournament timer. Works together with [FishBotScripts](https://github.com/ygongdev/FishBotScripts), a suite of scripts that updates your own database and spreadsheet from game files.
 
-# Table of Contents
-1. [Set Up](#setUp)
-2. [Node.js and Npm](#npm)
-3. [Configuration](#config)
-4. [Firebase](#firebase)
-5. [Usage](#usage)
-6. [Commands](#commands)
+Why the name FishBot you might ask? Because it's based on my game name, Fish and Chips.
+
+Pull requests and feedback are always welcomed!
+
+# Table of Contents #
+1. [Prerequisites](#pre)
+2. [Set Up](#setUp)
+3. [Node.js and Npm](#npm)
+4. [Configuration](#config)
+5. [Firebase](#firebase)
+6. [Usage](#usage)
+7. [Commands](#commands)
+
+# Prerequisites <a name="pre"></a> #
+1. You need to have an spreadsheet template that's exactly like this one: https://docs.google.com/spreadsheets/d/1SL5xFhLK9cAyjd53GJ1CYyV-GDDT3gr4Mjv0su8EpxM/edit?usp=sharing. The bot reads directly off the spreadsheet with this exact template. 
+2. Obtain all the credentials needed for [Configuration](#config).
+3. You can also customize the bot by directly modifying the source code, but realize that if you're planning on using FishBotScripts, you will need to modify FishBotScripts accordingly as well.
 
 # Set Up <a name="setUp"></a> #
 To get set up, you need to install the dependeicies in `package.json` and create some configuration files for your tokens, api key, and spreadsheet id.
@@ -69,7 +79,8 @@ module.exports = {
 }
 ```
 # Usage <a name="usage"></a> #
-Simple one liner: `node bot.js`
+To run the bot: `node bot.js`
+Hosting: you can either host it locally whenever you need it or host it on a remote server, so the bot is on 24/7. For remote hosting options, I recommend Heroku(free, if this is the only application) or DigitalOcean(monthly charged).
 
 # Commands <a name="commands"></a> #
 `{prefix}weekly_stats` - displays a weekly statistics from a google spreadsheet<br>
