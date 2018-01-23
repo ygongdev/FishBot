@@ -59,7 +59,7 @@ client.on("message", message => {
   			});
 		} else if (splitContent[0] === `${config.prefix}stats`) {
 			message.guild.members.find((member) => {
-				if(member.displayName === splitContent[1]) {
+				if(member.displayName.toLowerCase() === splitContent[1].toLowerCase()) {
 					statsCommand.getStats(message.channel, splitContent[1], member);
 				}
 			});
