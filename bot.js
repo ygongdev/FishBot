@@ -43,14 +43,14 @@ client.on("message", message => {
 			statsCommand.getWeeklyStats(message.channel);
 		} else if (splitContent[0] === `${config.prefix}top_damage`) {
 			statsCommand.getTopDamage(message.channel, splitContent[1]);
-		}else if (message.content === `${config.prefix}curr_tour`) {
+		} else if (message.content === `${config.prefix}curr_tour`) {
 			tournamentCommands.getCurrentTournament(message.channel);
 		} else if (message.content === `${config.prefix}next_tour`) {
 			tournamentCommands.getNextTournament(message.channel);
 		} else if (message.content === `${config.prefix}just_do_it`) {
 			miscCommands.getJustDoItGif(message.channel);
-		} else if (message.content === `${config.prefix}help`) {
-			helpCommands.getHelp(message.channel, config.prefix);
+		} else if (splitContent[0] === (`${config.prefix}help`)) {
+			helpCommands.getHelp(message.channel, splitContent[1]);
 		} else if (message.content === `${config.prefix}my_stats`) {
 			// first get the GuildMember who typed the message
 			message.guild.fetchMember(message.author)
