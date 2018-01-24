@@ -7,21 +7,26 @@ class Help {
 		this.commandHelp = {
 			"Statistics": [
 				{
-						title: "weekly_stats",
-						description: "\tDisplays current clan accolades for the week."
+					title: "weekly_stats",
+					description: "\tDisplays current clan accolades for the week."
 				},
 				{
-						title: "my_stats",
-						description: "\tDisplays your clan stats."
+					title: "my_stats",
+					description: "\tDisplays your clan stats."
 				},
 				{
-						title: "stats",
-						description: "\tDisplays clan stats of another member."
+					title: "stats",
+					description: "\tDisplays clan stats of another member."
 				},
 				{
-						title: "top_damage",
-						description: "\tDisplays the top [number] members with the most total damage.",
-						postfix: "[number]"
+					title: "top_damage",
+					description: "\tDisplays the top [number] members with the most total damage.",
+					postfix: "[number]"
+				},
+				{
+					title: "top_participation",
+					description: "\tDisplays the top [number] members with the most CQ participation.",
+					postfix: "[number]"
 				}
 			],
 			"Tournament": [
