@@ -6,7 +6,7 @@ const config = require("../config/config.json");
 
 const firebase = require("../config/firebaseConfig");
 const database = firebase.database;
-const clanRef = database.ref(config.clanCode);
+const clanRef = database.ref(`clans/${config.clanCode}/members`);
 
 /**
  * Importing models.
@@ -20,8 +20,21 @@ const Member = require("../model/Member");
 const clanInfo = require("../helper/getClanInfo");
 
 
+function getPoints(channel, displayName) {
 
-function getPoints(channel, memberName) {
+	clanRef.once('value', function(data) {
+		var clanData = data.val();
+		var keys = Object.keys(clanData);
+		for (var i = 0; i < keys.length; i++) {
+			var k = keys[i];
+			var memberName = clanData[k].member_name;
+			if (memberName.toLowerCase() === displayName.toLowerCase()) {
+				memberPoints = clanData[k].points;
+				break;
+			}
+		}
+		channel.send(`${memberName} has ${memberPoints} points.`);
+	});
 }
 
 module.exports = {
