@@ -151,11 +151,27 @@ function getStats(channel, nickname, discordMember) {
 			.addField("Total Damage", `${numeral(member.totalDamage).format('0,0')}`)
 			.addField("Last Week Total Damage", `${numeral(member.lastWeekTotalDamage).format('0,0')}`)
 			.addField("Damage Margin (increase/decrease from last week)", `${member.damageMargin}%`)
+			.addField("Rank", `${getRank(data, member.name)}`)
 			.addField("Clan Quest Attendence %", `${numeral(member.CQParticipation).format('0.00')}%`)
 			.addField("Max Stage", `${member.MS}`)
 			channel.send({embed});
 		}
 	})
+}
+
+/**
+ * Returns the rank of a given member.
+ *
+ * @param {clanInfo} data - contains all the members
+ * @param {string} name - The name of the user that we are getting the rank from
+ */
+function getRank(data, name) {
+	const topDamageMembers = data[0].getTopDamage(50)
+	for (let i = 0; i < topDamageMembers.length; i++) {
+		if (name == topDamageMembers[i].name)
+			return i;
+	}
+	return NULL;
 }
 
 module.exports = {

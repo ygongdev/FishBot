@@ -4,6 +4,10 @@ const numeral = require('numeral');
 const Discord = require("discord.js");
 const config = require("../config/config.json");
 
+const firebase = require("../config/firebaseConfig");
+const database = firebase.database;
+const clanRef = database.ref(config.clanCode);
+
 /**
  * Importing models.
  */
@@ -15,3 +19,11 @@ const Member = require("../model/Member");
  */
 const clanInfo = require("../helper/getClanInfo");
 
+
+
+function getPoints(channel, memberName) {
+}
+
+module.exports = {
+	getPoints: getPoints
+}
