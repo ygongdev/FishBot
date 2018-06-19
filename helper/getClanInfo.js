@@ -68,6 +68,7 @@ function getMemberInfo(memberData) {
 }
 
 /**
+ * TODO: Update this when the spreadsheet is better fitted.
  * Creates a new <ClanQuestMembers> from the google spreadsheet.
  */
 function getClanQuestMembersInfo(channel, guild_id) {
