@@ -17,7 +17,8 @@ function getHelp(channel, category) {
 	if (category == null) { // default help response
 		const embed = new Discord.RichEmbed()
 		.setTitle("ℹ️ FishBot Help")
-		.setDescription(`prefix: ${config.prefix}\ntype "${config.prefix}[command]" to use a command\ntype "${config.prefix}help [category]" for usage\n\tex: ${config.prefix}help Statistics`)
+		.setDescription(`prefix: ${config.prefix}\ntype "${config.prefix}[command]" to use a command\ntype "${config.prefix}help [category]" for description and usage\n\tex: ${config.prefix}help Statistics`)
+			.addField("Setup", `${help.getSetUpCommandList()}`)
 		.addField("Statistics", `${help.getStatisticsCommandList()}`)
 		.addField("Tournament", `${help.getTournamentCommandList()}`)
 		.addField("Timer", `${help.getTimerCommandList()}`)
@@ -26,6 +27,24 @@ function getHelp(channel, category) {
 		.setFooter("FishBot | Help");
 		channel.send({embed});
 	}
+	else if (category.toLowerCase() == "Set".toLowerCase()
+			|| category.toLowerCase() == "Setup".toLowerCase()
+        	|| category.toLowerCase() == "spreadsheet".toLowerCase()) {
+        setupObj = help.getObjSetup();
+        const embed = new Discord.RichEmbed()
+            .setTitle("ℹ️ FishBot Help Set Up")
+            .setDescription("Settings that are specific to each guild")
+            .setColor(0x00AE86)
+            .setFooter("FishBot | Help - Set Up");
+        for (let i = 0; i < setupObj.length; i++) {
+            if (setupObj[i].postfix == null)
+                embed.addField(`${setupObj[i].title}`, `${setupObj[i].description}`)
+            else
+                embed.addField(`${setupObj[i].title} ${setupObj[i].postfix}`, `${setupObj[i].description}`)
+        }
+        channel.send({embed});
+	}
+
 	else if (category.toLowerCase() == "Statistics".toLowerCase()
 		  || category.toLowerCase() == "Stats".toLowerCase()) {
 		statsObj = help.getObjStatistics();
@@ -59,7 +78,7 @@ function getHelp(channel, category) {
 		channel.send({embed});
 	}
 	else if (category.toLowerCase() == "Timer".toLowerCase()) {
-		timerObj = help.getObjStatistics();
+		timerObj = help.getObjTimer();
 		const embed = new Discord.RichEmbed()
 		.setTitle("ℹ️ FishBot Help Timer")
 		.setDescription("Queries for Timer Information")
