@@ -9,7 +9,17 @@ function getThinkingGif(channel) {
 	channel.send(thinking);
 }
 
+function getMistwraithCode(channel) {
+	channel.send("Mistwraith Clan Code: 3krx2");
+}
+
+function getAbbreviations(channel) {
+	channel.send("https://www.reddit.com/r/TapTitans2/wiki/abbreviations")
+}
+
 module.exports = {
 	getJustDoItGif: getJustDoItGif,
-	getThinkingGif: getThinkingGif
+	getThinkingGif: getThinkingGif,
+	getMistwraithCode: getMistwraithCode,
+	getAbbreviations: getAbbreviations
 }

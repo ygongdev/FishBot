@@ -23,19 +23,20 @@ const baseGoogleSpreadsheetUrl = "https://sheets.googleapis.com/v4/spreadsheets/
  * Creates a new <Members> from the google spreadsheet.
  */
 function getMembersInfo() {
-	const minRow = 6;
+	const minRow = 5;
 	const minCol = "A";
-	const maxCol = "G";
-	const maxRow = 55;
+	const maxCol = "H";
+	const maxRow = 59;
 
-	return fetch(`${baseGoogleSpreadsheetUrl}${config.spreadSheetId}/values/Rolling50!${minCol}${minRow}:${maxCol}${maxRow}?key=${config.googleSpreadsheetApiKey}`)
+	return fetch(`${baseGoogleSpreadsheetUrl}${config.spreadSheetId}/values/Clan Overview!${minCol}${minRow}:${maxCol}${maxRow}?key=${config.googleSpreadsheetApiKey}`)
 	.then((response) => response.json())
 	.then((data) => {
 		const newMembers = new Members();
 		const membersInfo = data.values;
 		membersInfo.map((memberInfo) => {
 			// Checking if the id field is non-empty.
-			if (memberInfo[0]) {
+			//console.log(memberInfo[1]);
+			if (memberInfo[1] !== undefined) {
 				const member = getMemberInfo(memberInfo);
 				newMembers.addMember(member);
 			}
@@ -58,17 +59,17 @@ function getMemberInfo(memberData) {
  * Creates a new <ClanQuestMembers> from the google spreadsheet.
  */
 function getClanQuestMembersInfo() {
-	const minCurrentCQRow = 6;
-	const minCurrentCQCol = "H"
-	const maxCurrentCQRow = 55;
-	const maxCurrentCQCol = "AO"
+	const minCurrentCQRow = 5;
+	const minCurrentCQCol = "L"
+	const maxCurrentCQRow = 59;
+	const maxCurrentCQCol = "BD"
 
 	// const minNextCQRow = 4;
 	// const minNextCQCol = "AS"
 	// const maxNextRow = 53;
 	// const maxNextCol = "BU";
 
-	return fetch(`${baseGoogleSpreadsheetUrl}${config.spreadSheetId}/values/Rolling50!${minCurrentCQCol}${minCurrentCQRow}:${maxCurrentCQCol}${maxCurrentCQRow}?key=${config.googleSpreadsheetApiKey}`)
+	return fetch(`${baseGoogleSpreadsheetUrl}${config.spreadSheetId}/values/Clan Overview!${minCurrentCQCol}${minCurrentCQRow}:${maxCurrentCQCol}${maxCurrentCQRow}?key=${config.googleSpreadsheetApiKey}`)
 	.then((response) => response.json())
 	.then((data) => {
 		let newCQMembers = new ClanQuestMembers();

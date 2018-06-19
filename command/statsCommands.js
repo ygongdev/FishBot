@@ -83,7 +83,7 @@ function getTopDamage(channel, number) {
 			for (let i = 0; i < topDamageMembers.length; i++) {
 				const memberName = topDamageMembers[i].name;
 				const memberTotal = numeral(topDamageMembers[i].totalDamage).format('0,0');
-				embed.addField(`${i + 1}. ${memberName}`, `\t${memberTotal}`, true);
+				embed.addField(`${i + 1}. ${memberName}`, `\t${memberTotal}M`, true);
 			}
 
 			channel.send({embed});
@@ -136,22 +136,18 @@ function getStats(channel, nickname, discordMember) {
 	.then((data) => {
 		const member = data[0].findByName(nickname)
 		if(!member) {
-			if (nickname = "xanza")
-				channel.send("<@" + discordMember.id + "> the one and only. I remember him well, as if he was only in the clan yesterday. Please come back. I miss you. We all do.");
-			else {
-				channel.send("Sorry, not a clan member");
-			}
+			channel.send("Sorry, not a clan member");
 		}
 		else {
 			const embed = new Discord.RichEmbed()
 			.setAuthor(`${member.name}'s Clan Stats`, `${discordMember.user.displayAvatarURL}`)
 			.setColor(0x00AE86)
-			.addField("Total Damage", `${numeral(member.totalDamage).format('0,0')}`)
+			.addField("Total Damage", `${numeral(member.totalDamage).format('0,0')}M`)
 			//.addField("Last Week Total Damage", `${numeral(member.lastWeekTotalDamage).format('0,0')}`)
 			.addField("Rank", `${member.damageRank}`)
 			.addField("Percent of clan total damage", `${member.damagePercent}%`)
 			.addField("Clan Quest Attendence %", `${numeral(member.CQParticipation).format('0.00')}%`)
-			//.addField("Max Stage", `${member.MS}`)
+			.addField("Max Stage", `${member.maxStage}`)
 			channel.send({embed});
 		}
 	})
